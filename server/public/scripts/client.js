@@ -42,6 +42,18 @@ function renderGuessHistory() {
     historyDiv.innerHTML = "";
     let guesses = response.data;
     console.log(guesses);
+    for(let guess of guesses){
+    if (guess.playerOneResult === 'is a winner!') {
+      alert('Player 1 wins!');
+    }
+    if (guess.playerTwoResult === 'is a winner!') {
+      alert('Player 2 wins!');
+    }
+    if (guess.playerThreeResult === 'is a winner!'){
+      alert('Player 3 wins!');
+    }
+  }
+
     for (let players of guesses) {
       historyDiv.innerHTML += `<tr>
       <td>${players.playerOneGuess}</td>
@@ -56,16 +68,16 @@ function renderGuessHistory() {
   });
 }
 
-function generateNewNumber(event){
-  axios({
-    method: 'POST',
-    url: '/reset'
-  }).then(function (response){
-    console.log('generateNewNumber')
-  }
+// function generateNewNumber(event){
+//   axios({
+//     method: 'POST',
+//     url: '/reset'
+//   }).then(function (response){
+//     console.log('generateNewNumber')
+//   }
     
-  )
-}
+//   )
+// }
 
 function resetGame(event){
   axios({

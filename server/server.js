@@ -91,10 +91,10 @@ function compareNumbers(guess) {
   return gameResult;
 }
  
-app.post("/reset", (req,res) => {
-  randomNumber = Math.floor(Math.random() * 25) + 1;
-  console.log(randomNumber);
-})
+// app.post("/reset", (req,res) => {
+//   randomNumber = Math.floor(Math.random() * 25) + 1;
+//   console.log(randomNumber);
+// })
 
 
 app.post("/guesses", (req, res) => {
@@ -123,6 +123,7 @@ app.get('/results', (req,res) => {
 })
 
 app.delete("/results", (req, res) => {
+  randomNumber = Math.floor(Math.random() * 25) + 1;
   roundNumber = 0;
   console.log('Delete request called');
   gameResult.length = 0
