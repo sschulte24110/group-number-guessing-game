@@ -1,0 +1,67 @@
+body {
+  background-color: #dcdcdc;
+  font-family: 'Roboto', sans-serif;
+  color: #313131;
+  font-size: 1.25em;
+}
+input {
+  padding: 1em;
+  margin-bottom: 1em;
+  width: 200px;
+  background: #FCFCFC;
+  border: 1px solid black;
+}
+button {
+    padding: 1em;
+    margin-bottom: 1em;
+    width: 150;
+    background: #FCFCFC;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: lightskyblue;
+    cursor: pointer;
+}
+button:hover {
+    background-color: rgb(107, 165, 201);
+}
+.winner {
+}
+table {
+  width: 100%;
+  /* text-align: left; */
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  height: 2.15em;
+}
+th, td {
+  padding: .5em;
+  min-width: 2.5em;
+  border-color: black;
+  border-width: 3px;
+}
+thead {
+  background: #7a7a7a;
+  color: #fcfcfc;
+}
+tbody tr:nth-child(odd){ 
+  background: #fcfcfc;
+}
+tbody tr:nth-child(even){
+  background: lightskyblue;
+}
+td .annual-salary-column {
+  text-align: right;
+}
+td .button-color-column {
+  text-align: center;
+}
+.button-color {
+  padding: 10px;
+  width: 75px;
+  font-size: px;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}

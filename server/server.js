@@ -4,11 +4,11 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 
 const playerGuesses = [
-  {
-    playerOneGuess: 2,
-    playerTwoGuess: 1,
-    playerThreeGuess: 3,
-  },
+  // {
+  //   playerOneGuess: 2,
+  //   playerTwoGuess: 1,
+  //   playerThreeGuess: 3,
+  // },
 ];
 
 const gameResult = [];
@@ -24,10 +24,10 @@ app.use(express.json({ extended: true }));
 
 // GET & POST Routes go here
 
-app.get("/guesses", (req, res) => {
-  console.log(randomNumber);
-  res.send(playerGuesses);
-});
+// app.get("/guesses", (req, res) => {
+//   console.log(randomNumber);
+//   res.send(playerGuesses);
+// });
 
 // turns out, we did need a separate function and array for the game results. we're lucky we stopped
 // when we did or we would've dug a hole too deep to climb out of LOL
@@ -38,48 +38,56 @@ app.get("/guesses", (req, res) => {
 // the right information is stored in the game results array (check the terminal when you submit inputs to confirm)
 // now we just need to get this info to the front end, maybe with a get request?
 
-function compareNumbers(guesses) {
+function compareNumbers(guess) {
+  let roundNumber = 0;
   let playerOneResult;
   let playerTwoResult;
   let playerThreeResult;
 
-  for (let guess of guesses) {
+  // for (let guess of guesses) {
     if (guess.playerOneGuess < randomNumber) {
-      playerOneResult = `player 1's guess is too low!`;
+      playerOneResult = `is too low!`;
     } else if (guess.playerOneGuess > randomNumber) {
-      playerOneResult = `player 1's guess is too high!`;
+      playerOneResult = `is too high!`;
     } else if (guess.playerOneGuess === randomNumber) {
-      playerOneResult = `player 1 is a winner!`;
+      playerOneResult = `is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber);
+      console.log(randomNumber)
+
     }
 
     if (guess.playerTwoGuess < randomNumber) {
-      playerTwoResult = `player 2's guess too low!`;
+      playerTwoResult = `is too low!`;
     } else if (guess.playerTwoGuess > randomNumber) {
-      playerTwoResult = `player 2's guess too high!`;
+      playerTwoResult = `is too high!`;
     } else if (guess.playerTwoGuess === randomNumber) {
-      playerTwoResult = `player 2 is a winner!`;
+      playerTwoResult = `is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber);
+      console.log(randomNumber)
     }
 
     if (guess.playerThreeGuess < randomNumber) {
-      playerThreeResult = `player 3's guess is too low!`;
+      playerThreeResult = `is too low!`;
     } else if (guess.playerThreeGuess > randomNumber) {
-      playerThreeResult = `player 3's guess is too high!`;
+      playerThreeResult = `is too high!`;
     } else if (guess.playerThreeGuess === randomNumber) {
-      playerThreeResult = `player 3 is a winner!`;
+      playerThreeResult = `is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber);
+      console.log(randomNumber)
     }
+
+    
     gameResult.push({
+      playerOneGuess: guess.playerOneGuess,
+      playerTwoGuess: guess.playerTwoGuess,
+      playerThreeGuess: guess.playerThreeGuess,
       playerOneResult: playerOneResult,
       playerTwoResult: playerTwoResult,
       playerThreeResult: playerThreeResult,
+      round: Number(roundNumber+=1)
     });
     console.log(gameResult);
-  }
+  // }
   return gameResult;
 }
 
@@ -96,11 +104,17 @@ app.post("/guesses", (req, res) => {
   }
 
   console.log(`Adding new guesses`, guesses);
-  playerGuesses.push(guesses);
+  // playerGuesses.push(guesses);
 
-  compareNumbers([guesses]);
-  res.status(201).send({ guesses });
+  compareNumbers(guesses);
+  res.status(201).send(guesses);
 });
+
+app.get('/results', (req,res) => {
+  console.log(randomNumber);
+  console.log(gameResult);
+  res.send(gameResult);
+})
 
 app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
