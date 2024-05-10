@@ -11,6 +11,8 @@ const playerGuesses = [
   },
 ];
 
+const gameResult = [];
+
 let randomNumber = Math.floor(Math.random() * 25) + 1;
 
 // This must be added before GET & POST routes.
@@ -32,7 +34,6 @@ app.get("/guesses", (req, res) => {
 });
 
 function compareNumbers(guesses) {
-  let result = [];
   let playerOneResult;
   let playerTwoResult;
   let playerThreeResult;
@@ -61,14 +62,14 @@ function compareNumbers(guesses) {
     } else if (guess.playerThreeGuess === randomNumber) {
       playerThreeResult = `player 3 is a winner!`;
     }
-    result.push({
+    gameResult.push({
       playerOneResult: playerOneResult,
       playerTwoResult: playerTwoResult,
       playerThreeResult: playerThreeResult,
     });
-    console.log(result);
+    console.log(gameResult);
   }
-  return result;
+  return gameResult;
 }
 
 app.post("/guesses", (req, res) => {
