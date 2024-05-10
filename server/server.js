@@ -37,9 +37,9 @@ app.use(express.json({ extended: true }));
 // at the end, it returns the object of game results, which ive tested and made sure that
 // the right information is stored in the game results array (check the terminal when you submit inputs to confirm)
 // now we just need to get this info to the front end, maybe with a get request?
-
+let roundNumber = 0;
 function compareNumbers(guess) {
-  let roundNumber = 0;
+
   let playerOneResult;
   let playerTwoResult;
   let playerThreeResult;
@@ -51,7 +51,7 @@ function compareNumbers(guess) {
       playerOneResult = `is too high!`;
     } else if (guess.playerOneGuess === randomNumber) {
       playerOneResult = `is a winner!`;
-      randomNumber = Math.floor(Math.random() * 25) + 1;
+      // randomNumber = Math.floor(Math.random() * 25) + 1;
       console.log(randomNumber)
 
     }
@@ -62,7 +62,7 @@ function compareNumbers(guess) {
       playerTwoResult = `is too high!`;
     } else if (guess.playerTwoGuess === randomNumber) {
       playerTwoResult = `is a winner!`;
-      randomNumber = Math.floor(Math.random() * 25) + 1;
+      // randomNumber = Math.floor(Math.random() * 25) + 1;
       console.log(randomNumber)
     }
 
@@ -72,10 +72,10 @@ function compareNumbers(guess) {
       playerThreeResult = `is too high!`;
     } else if (guess.playerThreeGuess === randomNumber) {
       playerThreeResult = `is a winner!`;
-      randomNumber = Math.floor(Math.random() * 25) + 1;
+      // randomNumber = Math.floor(Math.random() * 25) + 1;
       console.log(randomNumber)
     }
-
+    roundNumber++;
     
     gameResult.push({
       playerOneGuess: guess.playerOneGuess,
@@ -84,12 +84,18 @@ function compareNumbers(guess) {
       playerOneResult: playerOneResult,
       playerTwoResult: playerTwoResult,
       playerThreeResult: playerThreeResult,
-      round: Number(roundNumber+=1)
+      round: roundNumber
     });
     console.log(gameResult);
   // }
   return gameResult;
 }
+ 
+app.post("/reset", (req,res) => {
+  randomNumber = Math.floor(Math.random() * 25) + 1;
+  console.log(randomNumber);
+})
+
 
 app.post("/guesses", (req, res) => {
   const guesses = req.body;
@@ -114,6 +120,13 @@ app.get('/results', (req,res) => {
   console.log(randomNumber);
   console.log(gameResult);
   res.send(gameResult);
+})
+
+app.delete("/results", (req, res) => {
+  roundNumber = 0;
+  console.log('Delete request called');
+  gameResult.length = 0
+  res.status(200).send(gameResult);
 })
 
 app.listen(PORT, () => {

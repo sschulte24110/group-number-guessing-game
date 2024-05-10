@@ -25,6 +25,7 @@ button:hover {
     background-color: rgb(107, 165, 201);
 }
 .winner {
+  background-color: yellow;
 }
 table {
   width: 100%;

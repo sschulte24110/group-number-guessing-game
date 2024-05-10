@@ -45,7 +45,7 @@ function renderGuessHistory() {
     for (let players of guesses) {
       historyDiv.innerHTML += `<tr>
       <td>${players.playerOneGuess}</td>
-      <td>${players.playerOneResult}</td>
+      <td class="playerOneResults">${players.playerOneResult}</td>
       <td>${players.playerTwoGuess}</td>
       <td>${players.playerTwoResult}</td>
       <td>${players.playerThreeGuess}</td>
@@ -56,6 +56,25 @@ function renderGuessHistory() {
   });
 }
 
+function generateNewNumber(event){
+  axios({
+    method: 'POST',
+    url: '/reset'
+  }).then(function (response){
+    console.log('generateNewNumber')
+  }
+    
+  )
+}
+
+function resetGame(event){
+  axios({
+    method: 'DELETE',
+    url: '/results'
+  }).then(function (response) {
+    renderGuessHistory();
+  })
+}
 // function renderResultsHistory () {
 //   let playerOneResultTD = document.getElementsByClassName("playerOneResults")
 //   let playerTwoResultTD = document.getElementsByClassName("playerTwoResults")
@@ -67,7 +86,7 @@ function renderGuessHistory() {
 //     method: "GET",
 //     url: "/results"
 //   }).then (function (response) {
-    
+
 //     historyDiv.innerHTML = "";
 //     let results = response.data;
 //     console.log('Results', results);
@@ -76,20 +95,18 @@ function renderGuessHistory() {
 //     playerOneResultTD.innerText = (result.playerOneResult);
 //     playerTwoResultTD.innerText = (result.playerTwoResult);
 //     playerThreeResultTD.innerText = (result.playerThreeResult);
-    
+
 //     }
 //     // historyDiv.innerHTML += `
 //     // <tr>
 //     //   <td>${result.playerOneResult}</td>
 //     //   <td>${result.playerTwoResult}</td>
 //     //   <td>${result.playerThreeResult}</td>
-//     // <tr>  
+//     // <tr>
 //     // `
 //   })
 // }
 
-
 // renderResultsHistory();
-
 
 onReady();
