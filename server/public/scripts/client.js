@@ -41,6 +41,7 @@ function renderGuessHistory() {
   }).then(function (response) {
     historyDiv.innerHTML = "";
     let guesses = response.data;
+    console.log(guesses);
     for (let players of guesses) {
       historyDiv.innerHTML += `<tr>
       <td>${players.playerOneGuess}</td>

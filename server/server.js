@@ -24,14 +24,19 @@ app.use(express.json({ extended: true }));
 
 // GET & POST Routes go here
 
-// - '/guesses' sends the server our guesses via the inputs: POST
-// - '/guesses' retrieves our guesses from the server and displays them: GET
-// - '/randomNumber' gives us a new number when guessed: POST
-
 app.get("/guesses", (req, res) => {
   console.log(randomNumber);
   res.send(playerGuesses);
 });
+
+// turns out, we did need a separate function and array for the game results. we're lucky we stopped
+// when we did or we would've dug a hole too deep to climb out of LOL
+// anyways, what the function below is doing is checking every input to see where they
+// stand in comparison to our random number.
+
+// at the end, it returns the object of game results, which ive tested and made sure that
+// the right information is stored in the game results array (check the terminal when you submit inputs to confirm)
+// now we just need to get this info to the front end, maybe with a get request?
 
 function compareNumbers(guesses) {
   let playerOneResult;
@@ -88,7 +93,8 @@ app.post("/guesses", (req, res) => {
   playerGuesses.push(guesses);
 
   compareNumbers([guesses]);
-  res.status(201).send(guesses);
+  console.log(gameResult);
+  res.status(201).send({ guesses, gameResult });
 });
 
 app.listen(PORT, () => {
