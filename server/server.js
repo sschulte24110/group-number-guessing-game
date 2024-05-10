@@ -11,19 +11,7 @@ const playerGuesses = [
   },
 ];
 
-// let playerArray = [
-//   {
-//     playerOneGuess: Number(guess),
-//     playerOneresult: 'Too High',
-//     playerTwoGuess: Number(guess),
-//     playerTwoResult: 'Correct',
-//     playerThreeGuess: Number(guess),
-//     playerThreeGuess: 'Too Low'
-//     }
-
-// ]
-
-let randomNumber = Math.floor(Math.random() * 26) + 1;
+let randomNumber = Math.floor(Math.random() * 25) + 1;
 
 // This must be added before GET & POST routes.
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,8 +27,49 @@ app.use(express.json({ extended: true }));
 // - '/randomNumber' gives us a new number when guessed: POST
 
 app.get("/guesses", (req, res) => {
+  console.log(randomNumber);
   res.send(playerGuesses);
 });
+
+function compareNumbers(guesses) {
+  let result = [];
+  let playerOneResult;
+  let playerTwoResult;
+  let playerThreeResult;
+
+  for (let guess of guesses) {
+    if (guess.playerOneGuess < randomNumber) {
+      playerOneResult = `player 1's guess is too low!`;
+    } else if (guess.playerOneGuess > randomNumber) {
+      playerOneResult = `player 1's guess is too high!`;
+    } else if (guess.playerOneGuess === randomNumber) {
+      playerOneResult = `player 1 is a winner!`;
+    }
+
+    if (guess.playerTwoGuess < randomNumber) {
+      playerTwoResult = `player 2's guess too low!`;
+    } else if (guess.playerTwoGuess > randomNumber) {
+      playerTwoResult = `player 2's guess too high!`;
+    } else if (guess.playerTwoGuess === randomNumber) {
+      playerTwoResult = `player 2 is a winner!`;
+    }
+
+    if (guess.playerThreeGuess < randomNumber) {
+      playerThreeResult = `player 3's guess is too low!`;
+    } else if (guess.playerThreeGuess > randomNumber) {
+      playerThreeResult = `player 3's guess is too high!`;
+    } else if (guess.playerThreeGuess === randomNumber) {
+      playerThreeResult = `player 3 is a winner!`;
+    }
+    result.push({
+      playerOneResult: playerOneResult,
+      playerTwoResult: playerTwoResult,
+      playerThreeResult: playerThreeResult,
+    });
+    console.log(result);
+  }
+  return result;
+}
 
 app.post("/guesses", (req, res) => {
   const guesses = req.body;
@@ -57,6 +86,7 @@ app.post("/guesses", (req, res) => {
   console.log(`Adding new guesses`, guesses);
   playerGuesses.push(guesses);
 
+  compareNumbers([guesses]);
   res.status(201).send(guesses);
 });
 
