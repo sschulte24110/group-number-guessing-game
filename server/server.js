@@ -86,6 +86,11 @@ function compareNumbers(guess) {
 //   randomNumber = Math.floor(Math.random() * 25) + 1;
 //   console.log(randomNumber);
 // })
+app.get('/results', (req, res) => {
+  console.log(randomNumber);
+  console.log(gameResult);
+  res.send(gameResult);
+});
 
 app.post('/guesses', (req, res) => {
   const guesses = req.body;
@@ -101,12 +106,6 @@ app.post('/guesses', (req, res) => {
   console.log(`Adding new guesses`, guesses);
   compareNumbers(guesses);
   res.status(201).send(guesses);
-});
-
-app.get('/results', (req, res) => {
-  console.log(randomNumber);
-  console.log(gameResult);
-  res.send(gameResult);
 });
 
 app.delete('/results', (req, res) => {
