@@ -51,8 +51,7 @@ function compareNumbers(guesses) {
     } else if (guess.playerOneGuess === randomNumber) {
       playerOneResult = `player 1 is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber)
-
+      console.log(randomNumber);
     }
 
     if (guess.playerTwoGuess < randomNumber) {
@@ -62,7 +61,7 @@ function compareNumbers(guesses) {
     } else if (guess.playerTwoGuess === randomNumber) {
       playerTwoResult = `player 2 is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber)
+      console.log(randomNumber);
     }
 
     if (guess.playerThreeGuess < randomNumber) {
@@ -72,7 +71,7 @@ function compareNumbers(guesses) {
     } else if (guess.playerThreeGuess === randomNumber) {
       playerThreeResult = `player 3 is a winner!`;
       randomNumber = Math.floor(Math.random() * 25) + 1;
-      console.log(randomNumber)
+      console.log(randomNumber);
     }
     gameResult.push({
       playerOneResult: playerOneResult,
@@ -100,8 +99,7 @@ app.post("/guesses", (req, res) => {
   playerGuesses.push(guesses);
 
   compareNumbers([guesses]);
-  console.log(gameResult);
-  res.status(201).send({ guesses, gameResult });
+  res.status(201).send({ guesses });
 });
 
 app.listen(PORT, () => {
