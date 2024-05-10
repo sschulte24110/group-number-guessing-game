@@ -50,6 +50,9 @@ function compareNumbers(guesses) {
       playerOneResult = `player 1's guess is too high!`;
     } else if (guess.playerOneGuess === randomNumber) {
       playerOneResult = `player 1 is a winner!`;
+      randomNumber = Math.floor(Math.random() * 25) + 1;
+      console.log(randomNumber)
+
     }
 
     if (guess.playerTwoGuess < randomNumber) {
@@ -58,6 +61,8 @@ function compareNumbers(guesses) {
       playerTwoResult = `player 2's guess too high!`;
     } else if (guess.playerTwoGuess === randomNumber) {
       playerTwoResult = `player 2 is a winner!`;
+      randomNumber = Math.floor(Math.random() * 25) + 1;
+      console.log(randomNumber)
     }
 
     if (guess.playerThreeGuess < randomNumber) {
@@ -66,6 +71,8 @@ function compareNumbers(guesses) {
       playerThreeResult = `player 3's guess is too high!`;
     } else if (guess.playerThreeGuess === randomNumber) {
       playerThreeResult = `player 3 is a winner!`;
+      randomNumber = Math.floor(Math.random() * 25) + 1;
+      console.log(randomNumber)
     }
     gameResult.push({
       playerOneResult: playerOneResult,
