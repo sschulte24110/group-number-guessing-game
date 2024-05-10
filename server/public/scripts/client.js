@@ -1,18 +1,18 @@
 function onReady() {
-  console.log("JavaScript is loaded!");
+  console.log('JavaScript is loaded!');
   renderGuessHistory();
 }
-const historyDiv = document.getElementById("tbody");
+const historyDiv = document.getElementById('tbody');
 
 function sendGuesses(event) {
   event.preventDefault();
 
-  const playerOneGuess = document.getElementById("player-one-guess").value;
-  const playerTwoGuess = document.getElementById("player-two-guess").value;
-  const playerThreeGuess = document.getElementById("player-three-guess").value;
+  const playerOneGuess = document.getElementById('player-one-guess').value;
+  const playerTwoGuess = document.getElementById('player-two-guess').value;
+  const playerThreeGuess = document.getElementById('player-three-guess').value;
 
   axios({
-    method: "post",
+    method: 'post',
     url: `/guesses`,
     data: {
       playerOneGuess: Number(playerOneGuess),
@@ -21,38 +21,38 @@ function sendGuesses(event) {
     },
   })
     .then(function (response) {
-      console.log("SUCCESS");
+      console.log('SUCCESS');
       renderGuessHistory();
 
-      document.getElementById("player-one-guess").value = "";
-      document.getElementById("player-two-guess").value = "";
-      document.getElementById("player-three-guess").value = "";
+      document.getElementById('player-one-guess').value = '';
+      document.getElementById('player-two-guess').value = '';
+      document.getElementById('player-three-guess').value = '';
     })
     .catch(function (response) {
-      alert("request failed");
+      alert('request failed');
       console.log(error);
     });
 }
 
 function renderGuessHistory() {
   axios({
-    method: "GET",
-    url: "/results",
+    method: 'GET',
+    url: '/results',
   }).then(function (response) {
-    historyDiv.innerHTML = "";
+    historyDiv.innerHTML = '';
     let guesses = response.data;
     console.log(guesses);
-    for(let guess of guesses){
-    if (guess.playerOneResult === 'is a winner!') {
-      alert('Player 1 wins!');
+    for (let guess of guesses) {
+      if (guess.playerOneResult === 'is a winner!') {
+        alert('Player 1 wins!');
+      }
+      if (guess.playerTwoResult === 'is a winner!') {
+        alert('Player 2 wins!');
+      }
+      if (guess.playerThreeResult === 'is a winner!') {
+        alert('Player 3 wins!');
+      }
     }
-    if (guess.playerTwoResult === 'is a winner!') {
-      alert('Player 2 wins!');
-    }
-    if (guess.playerThreeResult === 'is a winner!'){
-      alert('Player 3 wins!');
-    }
-  }
 
     for (let players of guesses) {
       historyDiv.innerHTML += `<tr>
@@ -68,6 +68,7 @@ function renderGuessHistory() {
   });
 }
 
+// Combined this into the DELETE Post
 // function generateNewNumber(event){
 //   axios({
 //     method: 'POST',
@@ -75,18 +76,20 @@ function renderGuessHistory() {
 //   }).then(function (response){
 //     console.log('generateNewNumber')
 //   }
-    
+
 //   )
 // }
 
-function resetGame(event){
+function resetGame(event) {
   axios({
     method: 'DELETE',
-    url: '/results'
+    url: '/results',
   }).then(function (response) {
     renderGuessHistory();
-  })
+  });
 }
+
+// This function became unnecessary because we combined the guesses and results into one object in one global array.
 // function renderResultsHistory () {
 //   let playerOneResultTD = document.getElementsByClassName("playerOneResults")
 //   let playerTwoResultTD = document.getElementsByClassName("playerTwoResults")
